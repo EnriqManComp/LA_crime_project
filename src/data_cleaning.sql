@@ -5,11 +5,12 @@
 --- 1. Remove duplicates
 --- 2. Null values
 --- 3. Remove Unnecessary columns
+---   3.1 Remove Crm_cd_1 because is a redundant field
 --- 4. Standardize the Data
----   4.1 Fix Field Types
+---   4.1 Fix unrange date_rptd field
 ---   4.2 Handling missing values
 ---   4.3 Create a new table with the different modus operandis code by crime record
-
+---   4.4 Change Victim Desc Abbreviature for Real Victim Description
 ---
 
 -------- Remove duplicates ---------
@@ -149,20 +150,29 @@ DROP COLUMN cross_street;
 ALTER TABLE la_crime_data.crime_data_2010_2019
 DROP COLUMN part_1_2;
 
+---   3.1 Remove Crm_cd_1 because is a redundant field
+ALTER TABLE la_crime_data.crime_data_2010_2019
+DROP COLUMN crm_cd_1;
+
 
 -------------- 4. Standardize the Data -------------
--------- 4.1 Fix Field Types -------------
 
-ALTER TABLE la_crime_data.crime_data_2010_2019
-	ALTER COLUMN premis_cd SET DATA TYPE INTEGER USING premis_cd::INTEGER,
-	ALTER COLUMN weapon_used_cd SET DATA TYPE INTEGER USING weapon_used_cd::INTEGER,
-	ALTER COLUMN lat SET DATA TYPE FLOAT USING lat::FLOAT,
-	ALTER COLUMN lon SET DATA TYPE FLOAT USING lon::FLOAT;
+-------- 4.1 Fix out of range date_rptd field -------------
 
--------- 4.2 Handling missing values -------------
+UPDATE la_crime_data.crime_data_2010_2019
+SET date_rptd = TO_DATE(date_occ, 'YYYY/MM/DD')
+WHERE EXTRACT(YEAR FROM date_rptd) > 2019;
+
+-------- 4.2 Fix out of range victim age field -------------
+
+--- Delete Records where victim age is below 0
+DELETE FROM la_crime_data.crime_data_2010_2019
+WHERE vict_age < 0;
+
+-------- 4.3 Handling missing values -------------
 --- Different values in each field
 SELECT DISTINCT crm_cd
-FROM la_crime_data.crime_data_2010_2019
+FROM la_crime_data.crime_data_2010_2019;
 
 --- Set to code 0 the null values
 UPDATE la_crime_data.crime_data_2010_2019
@@ -200,6 +210,25 @@ WHERE vict_descent = '-';
 UPDATE la_crime_data.crime_data_2010_2019
 SET vict_descent = 'X'
 WHERE vict_descent IS NULL;
+
+--- Remove records where premis code is null
+DELETE FROM la_crime_data.crime_data_2010_2019
+WHERE premis_cd IS NULL;
+
+--- Fill the null values in premis description
+UPDATE la_crime_data.crime_data_2010_2019
+SET premis_desc = 'No Description'
+WHERE premis_cd = 418;
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET premis_desc = 'No Description'
+WHERE premis_cd = 256;
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET premis_desc = 'No Description'
+WHERE premis_cd = 838;
+
+------
 
 --- Count of different modus operandi codes
 SELECT mocodes, COUNT(*)
@@ -315,8 +344,83 @@ ALTER COLUMN mocode_9 SET DATA TYPE INTEGER USING mocode_9::INTEGER,
 ALTER COLUMN mocode_10 SET DATA TYPE INTEGER USING mocode_10::INTEGER;
 
  
+---   4.5 Change Victim Desc Abbreviature for Real Victim Description
 
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Other Asian'
+WHERE vict_descent = 'A';
 
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Black'
+WHERE vict_descent = 'B';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Chinese'
+WHERE vict_descent = 'C';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Cambodian'
+WHERE vict_descent = 'C';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Filipino'
+WHERE vict_descent = 'F';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Guamanian'
+WHERE vict_descent = 'G';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Hispanic/Latin/Mexican'
+WHERE vict_descent = 'H';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'American Indian/Alaska Native'
+WHERE vict_descent = 'I';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Japanese'
+WHERE vict_descent = 'J';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Korean'
+WHERE vict_descent = 'K';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Laotian'
+WHERE vict_descent = 'L';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Other'
+WHERE vict_descent = 'O';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Pacific Islander'
+WHERE vict_descent = 'P';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Samoan'
+WHERE vict_descent = 'S';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Hawaiian'
+WHERE vict_descent = 'U';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Vietnamese'
+WHERE vict_descent = 'V';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'White'
+WHERE vict_descent = 'W';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Unknown'
+WHERE vict_descent = 'X';
+
+UPDATE la_crime_data.crime_data_2010_2019
+SET vict_descent = 'Asian Indian'
+WHERE vict_descent = 'Z';
 
 
 
