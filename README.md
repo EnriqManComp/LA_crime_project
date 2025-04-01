@@ -1,4 +1,7 @@
 # LA Crime Analysis
+<div align="center">
+  <img src="project info/LAPD Crime Data Analysis.webp" width="600" height="300" ></img>
+</div>
 
 ## Problem Statement
 
