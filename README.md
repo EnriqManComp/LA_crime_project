@@ -16,13 +16,15 @@ Also, we need to keep tracking various statistics to get information about the n
 <img src="project info/LAPD Data Analysis Project.png"></img>
 
 ## SQL Queries
-1- [Create Schema]()
-2- [Import Data]()
-3- [Fix Data Types]()
-4- [Data Cleaning]()
-5- [Exploratory Data Analysis]()
+1. [Create Schema](src/import_data.sql)
+2. [Import Data](src/import_data.sql)
+3. [Fix Data Types](src/fix_data_type.sql)
+4. [Data Cleaning](src/data_cleaning.sql)
+5. [Exploratory Data Analysis](src/eda.sql)
 
 ## Tableau Dashboard
+
+You can find the Tableau Dashboard [here](https://public.tableau.com/views/TrackingBoardofCrimeRecords2010-2019/TrackingBoardofCrimeRecords?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 
 
