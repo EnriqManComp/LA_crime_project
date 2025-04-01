@@ -13,7 +13,7 @@ Also, we need to keep tracking various statistics to get information about the n
 
 ## Project Plan
 
-<img src="https://github.com/EnriqManComp/LA_crime_project/blob/master/project%20info/LAPD%20Data%20Analysis%20Project.png"></img>
+<img src="project info/LAPD Data Analysis Project.png"></img>
 
 ## SQL Queries
 1- [Create Schema]()
