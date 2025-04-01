@@ -3,7 +3,7 @@
 --- Number of crimes by year
 
 SELECT 
-	EXTRACT(YEAR FROM TO_DATE(date_rptd, 'YYYY/MM/DD')) AS year_committed,
+	EXTRACT(YEAR FROM date_rptd) AS year_committed,
 	COUNT (*) AS total_cases
 FROM la_crime_data.crime_data_2010_2019
 GROUP BY year_committed
