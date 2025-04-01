@@ -1,6 +1,6 @@
 # LA Crime Analysis
 
-## What we need to solve ?
+## Problem Statement
 
 We take the role of a local government that needs to allocate law enforcement resources based on different factors of crimes committed in LA city.
 
@@ -12,6 +12,8 @@ Also, we need to keep tracking various statistics to get information about the n
 - Percentage of crimes in different age ranges.
 
 ## Project Plan
+
+<img src="https://github.com/EnriqManComp/LA_crime_project/blob/master/project%20info/LAPD%20Data%20Analysis%20Project.png"></img>
 
 ## SQL Queries
 1- [Create Schema]()
